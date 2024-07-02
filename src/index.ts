@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { apiRoutes } from './routes/v1';
+import sequelize from './database/dataBase';
 
 dotenv.config();
 
@@ -12,6 +13,21 @@ const app = express();
 app.use(express.json());
 
 app.use(cors());
-app.use('/api/v1', apiRoutes);
+app.use('/api/v1', apiRoutes)
+app.use('/api/v1', (req, res) => {
+    res.status(401).json({ message: "Route not found" })
+});
 
-app.listen(3000, () => { console.log("first") })
+const port = process.env.DB_PORT
+
+
+sequelize.sync().then(() => {
+    console.log('Database synced');
+    app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
+    });
+}).catch((err: any) => {
+    console.error('Unable to connect to the database:', err);
+});
+
+app.listen(3000, () => { console.log("Server running") })
