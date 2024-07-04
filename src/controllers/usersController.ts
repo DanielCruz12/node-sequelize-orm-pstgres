@@ -10,9 +10,11 @@ const createUser = async (req: Request, res: Response) => {
         console.log(error)
     }
 }
+
 const getUsers = async (req: Request, res: Response) => {
 
 }
+
 const getUser = async (req: Request, res: Response) => {
 
 }
