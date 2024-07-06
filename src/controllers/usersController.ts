@@ -12,7 +12,7 @@ const createUser = async (req: Request, res: Response) => {
 }
 
 const getUsers = async (req: Request, res: Response) => {
-
+    console.log("users")
 }
 
 const getUser = async (req: Request, res: Response) => {
