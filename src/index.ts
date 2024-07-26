@@ -21,7 +21,7 @@ app.use('/api/v1', (req, res) => {
 const port = process.env.DB_PORT
 
 
-sequelize.sync().then(() => {
+sequelize.sync({ force: true }).then(() => {
     console.log('Database synced');
     app.listen(port, () => {
         console.log(`Server is running on port ${port}`);

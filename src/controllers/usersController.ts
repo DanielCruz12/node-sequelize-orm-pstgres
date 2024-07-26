@@ -12,11 +12,18 @@ const createUser = async (req: Request, res: Response) => {
 }
 
 const getUsers = async (req: Request, res: Response) => {
+    try {
+        const data = await userServices.getUsersService()
+        res.status(201).json({ "message": "usuarios encontrados", data })
+
+    } catch (error) {
+        console.log(error)
+    }
 
 }
 
 const getUser = async (req: Request, res: Response) => {
-
+    return console.log("first")
 }
 
 export const usersController = {

@@ -9,6 +9,11 @@ const create = async ({ firstName, lastName, email, password, userType }: any) =
     }
 }
 
+const getUsersService = async () => {
+    const users = await User.findAll()
+    return users
+}
+
 export const userServices = {
-    create
+    create, getUsersService
 }
