@@ -13,13 +13,12 @@ const app = express();
 app.use(express.json());
 
 app.use(cors());
-app.use('/api/v1', apiRoutes)
+app.use('/api/v1', apiRoutes);
 app.use('/api/v1', (req, res) => {
-    res.status(401).json({ message: "Route not found" })
+    res.status(401).json({ message: "Route not found" });
 });
 
-const port = process.env.DB_PORT
-
+const port = process.env.PORT || 3000;
 
 sequelize.sync().then(() => {
     console.log('Database synced');
@@ -29,5 +28,3 @@ sequelize.sync().then(() => {
 }).catch((err: any) => {
     console.error('Unable to connect to the database:', err);
 });
-
-app.listen(3000, () => { console.log("Server running") })
