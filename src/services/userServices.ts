@@ -1,3 +1,4 @@
+import { Form } from "../models/form";
 import { User } from "../models/user";
 
 const create = async (userData: any) => {
@@ -5,7 +6,9 @@ const create = async (userData: any) => {
 };
 
 const getAll = async () => {
-    return await User.findAll();
+    return await User.findAll({
+        include: [{ model: Form, as: 'forms' }],
+    });
 };
 
 const getById = async (id: string) => {
