@@ -1,19 +1,38 @@
-import { User } from "../models/user"
+import { User } from "../models/user";
 
-const create = async ({ firstName, lastName, email, password, userType }: any) => {
-    try {
-        const user = await User.create({ firstName, lastName, email, password, userType })
-        return user
-    } catch (error) {
-        console.log(error)
+const create = async (userData: any) => {
+    return await User.create(userData);
+};
+
+const getAll = async () => {
+    return await User.findAll();
+};
+
+const getById = async (id: string) => {
+    return await User.findByPk(id);
+};
+
+const update = async (id: string, userData: any) => {
+    const user = await User.findByPk(id);
+    if (user) {
+        return await user.update(userData);
     }
-}
+    return null;
+};
 
-const getUsersService = async () => {
-    const users = await User.findAll()
-    return users
-}
+const deleteUser = async (id: string) => {
+    const user = await User.findByPk(id);
+    if (user) {
+        await user.destroy();
+        return user;
+    }
+    return null;
+};
 
 export const userServices = {
-    create, getUsersService
-}
+    create,
+    getAll,
+    getById,
+    update,
+    deleteUser
+};
