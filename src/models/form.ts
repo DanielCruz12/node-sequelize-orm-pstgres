@@ -1,10 +1,10 @@
-import { DataTypes } from 'sequelize'
-import { v4 as uuidv4 } from 'uuid'
-import sequelize from '../database/dataBase'
-import { User } from './user'
+import { DataTypes } from 'sequelize';
+import { v4 as uuidv4 } from 'uuid';
+import sequelize from '../database/dataBase';
+import { User } from './user';
 
 export const Form = sequelize.define(
-  'Form',
+  'form',  // Nombre del modelo
   {
     id: {
       type: DataTypes.UUID,
@@ -23,31 +23,28 @@ export const Form = sequelize.define(
     },
     description: {
       type: DataTypes.STRING(255),
-      allowNull: false,
     },
     icon: {
       type: DataTypes.STRING(255),
-      allowNull: false,
     },
     category: {
       type: DataTypes.STRING(255),
-      allowNull: false,
     },
     slug: {
       type: DataTypes.STRING(255),
       allowNull: false,
+      unique: true,
     },
     aiPrompt: {
       type: DataTypes.STRING(255),
-      allowNull: false,
     },
   },
   {
     paranoid: true,
     freezeTableName: true,
-    modelName: 'Form',
-  },
-)
+    tableName: 'forms',  // Nombre de la tabla
+  }
+);
 
 User.hasMany(Form, {
   foreignKey: 'userId',
