@@ -10,6 +10,6 @@ const router = express.Router();
 router.use('/auth', authRoutes);
 router.use('/forms', formRoutes);
 router.use('/users', userRoutes);
-router.use('/webhook/create', bodyParser.raw({ type: "application/json" }) ,handleWebhook)
+router.use('/webhooks', bodyParser.raw({ type: "application/json" }) ,handleWebhook)
 
 export { router as apiRoutes };

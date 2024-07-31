@@ -22,11 +22,6 @@ app.use('/api/v1', (req, res) => {
 
 const port = process.env.PORT || 3000;
 
-const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
-
-if (!WEBHOOK_SECRET) {
-    throw new Error('Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local')
-}
 
 sequelize.sync({ alter: true }).then(() => {
     console.log('Database synced');
