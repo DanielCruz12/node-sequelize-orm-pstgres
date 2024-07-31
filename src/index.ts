@@ -15,7 +15,6 @@ app.use(express.json());
 
 app.use(cors());
 app.use('/api/v1', apiRoutes);
-app.use('/api/v1/webhook/create', bodyParser.raw({ type: 'application/json' }));
 
 app.use('/api/v1', (req, res) => {
     res.status(401).json({ message: "Route not found" });
