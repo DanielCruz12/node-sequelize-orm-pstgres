@@ -5,6 +5,7 @@ import { apiRoutes } from './routes/v1';
 import sequelize from './database/dataBase';
 import { Webhook } from "svix";
 import bodyParser from "body-parser";
+import { buffer } from "micro";
 
 dotenv.config();
 
@@ -36,7 +37,7 @@ app.post(
 
     // Get the headers and body
     const headers = req.headers;
-    const payload = req.body;
+    const payload = (await buffer(req)).toString();
 
     // Get the Svix headers for verification
     const svix_id = headers["svix-id"] as string;
