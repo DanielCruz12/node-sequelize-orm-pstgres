@@ -3,13 +3,13 @@ import { authRoutes } from './authRoutes';
 import { userRoutes } from './userRoutes';
 import { formRoutes } from './formRoutes';
 import { handleWebhook } from '../../controllers/webHookController';
-import bodyParser from "body-parser";
 
 const router = express.Router();
 
 router.use('/auth', authRoutes);
 router.use('/forms', formRoutes);
 router.use('/users', userRoutes);
-router.use('/webhooks', bodyParser.raw({ type: "application/json" }) ,handleWebhook)
+
+router.post('/webhooks' ,handleWebhook)
 
 export { router as apiRoutes };

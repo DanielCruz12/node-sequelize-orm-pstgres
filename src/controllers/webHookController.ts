@@ -8,19 +8,15 @@ export const handleWebhook = async (req: Request, res: Response) => {
     throw new Error('You need a WEBHOOK_SECRET in your .env')
   }
 
-  const headers = req.headers;
-  const payload = req.body;
-
-  const svix_id = headers['svix-id'] as string;
-  const svix_timestamp = headers['svix-timestamp'] as string;
-  const svix_signature = headers['svix-signature'] as string;
-
+  const headers = req.headers
+  const payload = req.body
+  const svix_id = headers['svix-id'] as string
+  const svix_timestamp = headers['svix-timestamp'] as string
+  const svix_signature = headers['svix-signature'] as string
   if (!svix_id || !svix_timestamp || !svix_signature) {
-    return res.status(400).json({ message: 'Missing Svix headers' });
+    return res.status(400).json({ message: 'Missing Svix headers' })
   }
-
-  const wh = new Webhook(WEBHOOK_SECRET);
-
+  const wh = new Webhook(WEBHOOK_SECRET)
   let evt: any = null
 
   try {
