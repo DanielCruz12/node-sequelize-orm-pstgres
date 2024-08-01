@@ -10,6 +10,4 @@ router.use('/auth', authRoutes);
 router.use('/forms', formRoutes);
 router.use('/users', userRoutes);
 
-router.post('/webhooks' ,handleWebhook)
-
 export { router as apiRoutes };
