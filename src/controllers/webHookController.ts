@@ -1,26 +1,44 @@
-/* import { Request, Response } from 'express'
+import { Request, Response } from 'express'
 import { Webhook } from 'svix'
-import { usersController } from '../controllers/usersController'
+import { usersController } from './usersController'
 
-export const handleWebhook = async (req: Request, res: Response) => {
+export const handleWebHook = async (req: Request, res: Response) => {
+  // Retrieve the webhook secret from environment variables
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET
   if (!WEBHOOK_SECRET) {
-    throw new Error('You need a WEBHOOK_SECRET in your .env')
+    console.error('You need a WEBHOOK_SECRET in your .env')
+    return res.status(500).json({ message: 'Internal server error' })
   }
 
+  // Extract the headers and raw payload
   const headers = req.headers
   const payload = req.body
+  const rawBody = payload.toString('utf8')
+
+  console.log('rawBody:', rawBody)
+  console.log(
+    'rawBody type:',
+    Buffer.isBuffer(rawBody) ? 'Buffer' : typeof rawBody,
+  )
+
+  // Extract Svix-specific headers
   const svix_id = headers['svix-id'] as string
   const svix_timestamp = headers['svix-timestamp'] as string
   const svix_signature = headers['svix-signature'] as string
+
+  // Check for missing Svix headers
   if (!svix_id || !svix_timestamp || !svix_signature) {
     return res.status(400).json({ message: 'Missing Svix headers' })
   }
+
+  // Create a new Svix webhook instance with the secret
   const wh = new Webhook(WEBHOOK_SECRET)
+
   let evt: any = null
 
   try {
-    evt = wh.verify(payload, {
+    // Verify the webhook payload and headers
+    evt = wh.verify(rawBody, {
       'svix-id': svix_id,
       'svix-timestamp': svix_timestamp,
       'svix-signature': svix_signature,
@@ -29,7 +47,7 @@ export const handleWebhook = async (req: Request, res: Response) => {
     console.error('Error verifying webhook:', err.message)
     return res.status(400).json({
       success: false,
-      message: 'Webhook verification failed.',
+      message: err.message,
     })
   }
 
@@ -38,7 +56,6 @@ export const handleWebhook = async (req: Request, res: Response) => {
   console.log(`Webhook received with ID: ${id}, type: ${eventType}`)
   console.log('Webhook body:', evt.data)
 
-  // Handle the webhook event based on eventType
   try {
     switch (eventType) {
       case 'user.created':
@@ -79,4 +96,3 @@ export const handleWebhook = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error handling webhook event' })
   }
 }
- */
