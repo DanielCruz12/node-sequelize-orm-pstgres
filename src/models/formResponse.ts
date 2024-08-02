@@ -8,18 +8,18 @@ export const FormResponse = sequelize.define(
   'formResponse',
   {
     id: {
-      type: DataTypes.UUID,
+      type: DataTypes.STRING,
       primaryKey: true,
       defaultValue: () => uuidv4(),
       allowNull: false,
     },
     formId: {
-      type: DataTypes.UUID,
+      type: DataTypes.STRING,
       allowNull: false,
       references: { model: Form, key: 'id' },
     },
     userId: {
-      type: DataTypes.UUID,
+      type: DataTypes.STRING,
       allowNull: false,
       references: { model: User, key: 'id' },
     },
