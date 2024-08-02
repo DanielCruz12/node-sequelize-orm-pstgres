@@ -1,9 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import { Webhook } from 'svix'
-import { apiRoutes } from './routes/v1'
 import bodyParser from 'body-parser'
+import { apiRoutes } from './routes/v1'
 import { handleWebHook } from './controllers/webHookController'
 
 dotenv.config()
@@ -14,14 +13,16 @@ const app = express()
 //* Middleware to parse JSON bodies
 app.use(cors())
 
-//* Define routes
-app.use('/api/v1', apiRoutes)
-
 app.post(
   '/api/webhooks',
   bodyParser.raw({ type: 'application/json' }),
   handleWebHook,
 )
+
+app.use(express.json())
+
+//* Define routes
+app.use('/api/v1', apiRoutes)
 
 //* Fallback route for undefined endpoints
 app.use('/api/v1', (req, res) => {
