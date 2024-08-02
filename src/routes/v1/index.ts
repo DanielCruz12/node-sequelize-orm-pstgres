@@ -2,7 +2,6 @@ import express from 'express';
 import { authRoutes } from './authRoutes';
 import { userRoutes } from './userRoutes';
 import { formRoutes } from './formRoutes';
-import { handleWebhook } from '../../controllers/webHookController';
 
 const router = express.Router();
 
