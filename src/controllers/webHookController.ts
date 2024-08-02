@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+/* import { Request, Response } from 'express'
 import { Webhook } from 'svix'
 import { usersController } from '../controllers/usersController'
 
@@ -79,3 +79,4 @@ export const handleWebhook = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Error handling webhook event' })
   }
 }
+ */
