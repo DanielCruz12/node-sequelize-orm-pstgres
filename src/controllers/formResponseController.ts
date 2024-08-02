@@ -2,12 +2,13 @@ import { Request, Response } from 'express'
 import { FormResponseServices } from '../services/formResponseService'
 
 const createFormResponse = async (req: Request, res: Response) => {
-  const { userId, formId, responseData, form_fields_data } = req.body
+  const { userId, formId, responseData, form_fields_data, share_status } = req.body
   try {
     const data = await FormResponseServices.save({
       userId,
       formId,
       responseData,
+      share_status,
       form_fields_data,
     })
     res.status(201).json({ message: 'ResponseAI save successfully', data })
