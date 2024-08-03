@@ -21,6 +21,7 @@ const getAll = async () => {
   try {
     const forms = await Form.findAll({
       attributes: [
+        'id',
         'name',
         'description',
         'icon',
@@ -32,7 +33,14 @@ const getAll = async () => {
         {
           model: FormField,
           as: 'fields',
-          attributes: ['label', 'fieldType', 'name', 'required', 'placeholder'],
+          attributes: [
+            'id',
+            'label',
+            'fieldType',
+            'name',
+            'required',
+            'placeholder',
+          ],
         },
       ],
     })
@@ -45,6 +53,7 @@ const getAll = async () => {
 }
 
 const formatFormResponse = ({
+  id,
   name,
   description,
   icon,
@@ -53,9 +62,10 @@ const formatFormResponse = ({
   aiPrompt,
   fields,
 }: any) => ({
+  icon,
   name,
   desc: description,
-  icon,
+  id,
   category,
   slug,
   aiPrompt,
@@ -63,12 +73,14 @@ const formatFormResponse = ({
 })
 
 const formatFieldResponse = ({
+  id,
   label,
   fieldType,
   name,
   required,
   placeholder,
 }: any) => ({
+  id,
   label,
   field: fieldType,
   name,

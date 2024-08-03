@@ -9,14 +9,14 @@ export const FormField = sequelize.define(
     id: {
       allowNull: false,
       primaryKey: true,
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       defaultValue: () => uuidv4(),
     },
     formId: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'forms',  // Asegúrate de que este nombre coincide con el nombre de la tabla
+        model: 'forms', 
         key: 'id',
       },
     },

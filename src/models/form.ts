@@ -7,7 +7,7 @@ export const Form = sequelize.define(
   'form',  // Nombre del modelo
   {
     id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       primaryKey: true,
       defaultValue: () => uuidv4(),
       allowNull: false,
