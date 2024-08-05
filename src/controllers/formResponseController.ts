@@ -18,31 +18,31 @@ const createFormResponse = async (req: Request, res: Response) => {
   }
 }
 
-//? this ep will be to show the fields and forms to the community
-/* const getUsers = async (req: Request, res: Response) => {
+//? this ep will be to show the fields and forms to the community with status share_ in true
+ const getFormResponsesCommunity = async (req: Request, res: Response) => {
   try {
-    const data = await userServices.getAll()
+    const data = await FormResponseServices.getAllFormCommunity()
     res.status(200).json(data)
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Internal server error' })
   }
-} */
+} 
 
 //? This will be to show forms and fields to the user (History)
-/* const getUser = async (req: Request, res: Response) => {
+ const getFormsByUser = async (req: Request, res: Response) => {
   const { id } = req.params
   try {
-    const data = await userServices.getById(id)
+    const data = await FormResponseServices.getFormResponseByUserId(id)
     if (!data) {
-      return res.status(404).json({ message: 'User not found' })
+      return res.status(404).json({ message: 'Form not found' })
     }
     res.status(200).json(data)
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Internal server error' })
   }
-} */
+} 
 
 /* const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params
@@ -60,4 +60,6 @@ const createFormResponse = async (req: Request, res: Response) => {
 
 export const formResponseController = {
   createFormResponse,
+  getFormsByUser,
+  getFormResponsesCommunity
 }

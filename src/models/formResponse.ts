@@ -50,3 +50,13 @@ FormResponse.belongsTo(User, {
   foreignKey: 'userId',
   as: 'user',
 })
+
+Form.hasMany(FormResponse, {
+  foreignKey: 'formId',
+  as: 'formResponses',
+})
+
+FormResponse.belongsTo(Form, {
+  foreignKey: 'formId',
+  as: 'form',
+})
