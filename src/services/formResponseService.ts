@@ -1,5 +1,6 @@
 import { Form } from '../models/form'
 import { FormResponse } from '../models/formResponse'
+import { User } from '../models/user'
 
 const save = async (formResponseData: any) => {
   return await FormResponse.create(formResponseData)
@@ -14,8 +15,11 @@ const getFormResponseByUserId = async (userId: string) => {
 
 const getAllFormCommunity = async () => {
   return await FormResponse.findAll({
-    where: {share_status: true},
-    include: [{ model: Form, as: 'form' }],
+    where: { share_status: true },
+    include: [
+      { model: Form, as: 'form' },
+      { model: User, as: 'user' },
+    ],
   })
 }
 
@@ -43,7 +47,7 @@ const deleteUser = async (id: string) => {
 export const FormResponseServices = {
   save,
   getFormResponseByUserId,
-  getAllFormCommunity
+  getAllFormCommunity,
   /*  getAll,
     getById,
     update,

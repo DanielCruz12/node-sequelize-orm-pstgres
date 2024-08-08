@@ -53,8 +53,6 @@ export const handleWebHook = async (req: Request, res: Response) => {
 
   const { id, email_addresses, first_name, last_name } = evt.data
   const eventType = evt.type
-  console.log(`Webhook received with ID: ${id}, type: ${eventType}`)
-  console.log('Webhook body:', evt.data)
 
   try {
     switch (eventType) {
@@ -64,6 +62,7 @@ export const handleWebHook = async (req: Request, res: Response) => {
             body: {
               email: email_addresses[0].email_address,
               id: email_addresses[0].id,
+              name: first_name + ' ' + last_name,
             },
           } as Request,
           res,

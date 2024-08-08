@@ -1,16 +1,16 @@
-import app from './app';
-import sequelize from './database/dataBase';
+import app from './app'
+import sequelize from './database/dataBase'
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000
 
 sequelize
   .sync()
   .then(() => {
-    console.log('Database synced');
+    console.log('Database synced')
     app.listen(port, () => {
-      console.log(`Server is running on port ${port}`);
-    });
+      console.log(`Server is running on port ${port}`)
+    })
   })
   .catch((err) => {
-    console.error('Unable to connect to the database:', err);
-  });
+    console.error('Unable to connect to the database:', err)
+  })
