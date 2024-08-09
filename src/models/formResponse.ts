@@ -1,10 +1,10 @@
-import { DataTypes } from 'sequelize'
+import { DataTypes, ModelDefined, Optional } from 'sequelize'
 import { v4 as uuidv4 } from 'uuid'
 import sequelize from '../database/dataBase'
 import { Form } from './form'
 import { User } from './user'
 
-export const FormResponse = sequelize.define(
+export const FormResponse: any = sequelize.define(
   'formResponse',
   {
     id: {

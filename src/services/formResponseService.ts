@@ -23,6 +23,25 @@ const getAllFormCommunity = async () => {
   })
 }
 
+const shareFormResponseToCommunity = async ({
+  userId,
+  formId,
+  share_status,
+}: any) => {
+  const formResponse = await FormResponse.findOne({
+    where: { userId, formId },
+  })
+
+  if (!formResponse) {
+    throw new Error('Form response not found')
+  }
+
+  formResponse.share_status = share_status
+  await formResponse.save()
+
+  return formResponse
+}
+
 /* const getById = async (id: string) => {
     return await User.findByPk(id);
 };
@@ -47,6 +66,7 @@ const deleteUser = async (id: string) => {
 export const FormResponseServices = {
   save,
   getFormResponseByUserId,
+  shareFormResponseToCommunity,
   getAllFormCommunity,
   /*  getAll,
     getById,

@@ -2,7 +2,8 @@ import { Request, Response } from 'express'
 import { FormResponseServices } from '../services/formResponseService'
 
 const createFormResponse = async (req: Request, res: Response) => {
-  const { userId, formId, responseData, form_fields_data, share_status } = req.body
+  const { userId, formId, responseData, form_fields_data, share_status } =
+    req.body
   try {
     const data = await FormResponseServices.save({
       userId,
@@ -19,7 +20,7 @@ const createFormResponse = async (req: Request, res: Response) => {
 }
 
 //? this ep will be to show the fields and forms to the community with status share_ in true
- const getFormResponsesCommunity = async (req: Request, res: Response) => {
+const getFormResponsesCommunity = async (req: Request, res: Response) => {
   try {
     const data = await FormResponseServices.getAllFormCommunity()
     res.status(200).json(data)
@@ -27,10 +28,10 @@ const createFormResponse = async (req: Request, res: Response) => {
     console.error(error)
     res.status(500).json({ message: 'Internal server error' })
   }
-} 
+}
 
 //? This will be to show forms and fields to the user (History)
- const getFormsByUser = async (req: Request, res: Response) => {
+const getFormsByUser = async (req: Request, res: Response) => {
   const { id } = req.params
   try {
     const data = await FormResponseServices.getFormResponseByUserId(id)
@@ -42,7 +43,30 @@ const createFormResponse = async (req: Request, res: Response) => {
     console.error(error)
     res.status(500).json({ message: 'Internal server error' })
   }
-} 
+}
+
+const shareFormResponseToCommunityController = async (
+  req: Request,
+  res: Response,
+) => {
+  const { userId, formId, share_status } = req.body
+  try {
+    const data = await FormResponseServices.shareFormResponseToCommunity({
+      userId,
+      formId,
+      share_status,
+    })
+
+    res.status(200).json({ message: 'Form shared successfully', data })
+  } catch (error: any) {
+    console.error(error)
+    if (error.message === 'Form response not found') {
+      res.status(404).json({ message: 'Form response not found' })
+    } else {
+      res.status(500).json({ message: 'Internal server error' })
+    }
+  }
+}
 
 /* const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params
@@ -61,5 +85,6 @@ const createFormResponse = async (req: Request, res: Response) => {
 export const formResponseController = {
   createFormResponse,
   getFormsByUser,
-  getFormResponsesCommunity
+  shareFormResponseToCommunityController,
+  getFormResponsesCommunity,
 }
