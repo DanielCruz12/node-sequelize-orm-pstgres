@@ -1,3 +1,4 @@
+import { ShareFormResponseParams } from '../interfaces'
 import { Form } from '../models/form'
 import { FormResponse } from '../models/formResponse'
 import { User } from '../models/user'
@@ -23,11 +24,11 @@ const getAllFormCommunity = async () => {
   })
 }
 
-const shareFormResponseToCommunity = async ({
+export const shareFormResponseToCommunity = async ({
   userId,
   formId,
   share_status,
-}: any) => {
+}: ShareFormResponseParams) => {
   const formResponse = await FormResponse.findOne({
     where: { userId, id: formId },
   })

@@ -5,3 +5,9 @@ export interface DBConfig {
     db_host: string;
     db_port: number;
   }
+
+  export interface ShareFormResponseParams {
+    userId: string;
+    formId: string;
+    share_status: boolean;
+  }

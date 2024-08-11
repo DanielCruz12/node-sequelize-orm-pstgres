@@ -57,14 +57,18 @@ const shareFormResponseToCommunityController = async (
       share_status,
     })
 
-    res.status(200).json({ message: 'Form shared successfully', data })
+    return res.status(200).json({
+      message: `Form ${share_status ? 'shared' : 'unshared'} successfully`,
+      data,
+    })
   } catch (error: any) {
-    console.error(error)
+    console.error('Error sharing/unsharing form response:', error)
+
     if (error.message === 'Form response not found') {
-      res.status(404).json({ message: 'Form response not found' })
-    } else {
-      res.status(500).json({ message: 'Internal server error' })
+      return res.status(404).json({ message: 'Form response not found' })
     }
+
+    return res.status(500).json({ message: 'Internal server error' })
   }
 }
 
