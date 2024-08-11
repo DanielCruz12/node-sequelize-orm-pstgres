@@ -29,7 +29,7 @@ const shareFormResponseToCommunity = async ({
   share_status,
 }: any) => {
   const formResponse = await FormResponse.findOne({
-    where: { userId, formId },
+    where: { userId, id: formId },
   })
 
   if (!formResponse) {
