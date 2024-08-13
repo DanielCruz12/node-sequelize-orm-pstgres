@@ -64,7 +64,7 @@ const formatFormResponse = ({
 }: any) => ({
   icon,
   name,
-  desc: description,
+  description,
   id,
   category,
   slug,
