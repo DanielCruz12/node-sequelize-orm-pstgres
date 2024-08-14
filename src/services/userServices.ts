@@ -8,6 +8,7 @@ const create = async (userData: any) => {
 const getAll = async () => {
     return await User.findAll({
         include: [{ model: Form, as: 'forms' }],
+        order: [['createdAt', 'ASC']],
     });
 };
 

@@ -43,6 +43,7 @@ const getAll = async () => {
           ],
         },
       ],
+      order: [['createdAt', 'ASC']],
     })
 
     return forms.map(formatFormResponse)
