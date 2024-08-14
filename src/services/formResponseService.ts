@@ -11,7 +11,7 @@ const getFormResponseByUserId = async (userId: string) => {
   return await FormResponse.findAll({
     where: { userId },
     include: [{ model: Form, as: 'form' }],
-    order: [['createdAt', 'ASC']],
+    order: [['createdAt', 'DESC']],
   })
 }
 
@@ -22,7 +22,7 @@ const getAllFormCommunity = async () => {
       { model: Form, as: 'form' },
       { model: User, as: 'user' },
     ],
-    order: [['createdAt', 'ASC']],
+    order: [['createdAt', 'DESC']],
   })
 }
 
