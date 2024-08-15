@@ -45,32 +45,30 @@ export const shareFormResponseToCommunity = async ({
   return formResponse
 }
 
-/* const getById = async (id: string) => {
-    return await User.findByPk(id);
-};
+const deleteResponseId = async (id: string) => {
+  const formResponse = await FormResponse.findByPk(id)
+  if (formResponse) {
+    await formResponse.destroy()
+    return formResponse
+  }
+  return null
+}
 
-const update = async (id: string, userData: any) => {
+/* const update = async (id: string, userData: any) => {
     const user = await User.findByPk(id);
     if (user) {
         return await user.update(userData);
     }
     return null;
 };
-
-const deleteUser = async (id: string) => {
-    const user = await User.findByPk(id);
-    if (user) {
-        await user.destroy();
-        return user;
-    }
-    return null;
-}; */
+ */
 
 export const FormResponseServices = {
   save,
   getFormResponseByUserId,
   shareFormResponseToCommunity,
   getAllFormCommunity,
+  deleteResponseId,
   /*  getAll,
     getById,
     update,

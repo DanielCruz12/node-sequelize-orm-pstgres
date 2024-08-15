@@ -7,5 +7,6 @@ formResponseRoutes.post('/', formResponseController.createFormResponse)
 formResponseRoutes.get('/community', formResponseController.getFormResponsesCommunity)
 formResponseRoutes.post('/share-community', formResponseController.shareFormResponseToCommunityController)
 formResponseRoutes.get('/:id', formResponseController.getFormsByUser)
+formResponseRoutes.delete('/:id', formResponseController.deleteByResponseId)
 
 export { formResponseRoutes }

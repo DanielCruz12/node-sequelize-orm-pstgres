@@ -45,6 +45,7 @@ const getFormsByUser = async (req: Request, res: Response) => {
   }
 }
 
+//? This will share the result to the community
 const shareFormResponseToCommunityController = async (
   req: Request,
   res: Response,
@@ -72,23 +73,24 @@ const shareFormResponseToCommunityController = async (
   }
 }
 
-/* const deleteUser = async (req: Request, res: Response) => {
+const deleteByResponseId = async (req: Request, res: Response) => {
   const { id } = req.params
   try {
-    const data = await userServices.deleteUser(id)
+    const data = await FormResponseServices.deleteResponseId(id)
     if (!data) {
-      return res.status(404).json({ message: 'User not found' })
+      return res.status(404).json({ message: 'ResponseId not found' })
     }
-    res.status(200).json({ message: 'User deleted successfully' })
+    res.status(200).json({ message: 'Result deleted successfully' })
   } catch (error) {
     console.error(error)
     res.status(500).json({ message: 'Internal server error' })
   }
-} */
+}
 
 export const formResponseController = {
   createFormResponse,
   getFormsByUser,
   shareFormResponseToCommunityController,
   getFormResponsesCommunity,
+  deleteByResponseId
 }
