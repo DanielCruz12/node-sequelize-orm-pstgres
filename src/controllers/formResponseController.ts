@@ -87,10 +87,74 @@ const deleteByResponseId = async (req: Request, res: Response) => {
   }
 }
 
+const likeFormResponse = async (req: Request, res: Response) => {
+  const { userId, formResponseId } = req.body
+  try {
+    const like = await FormResponseServices.addLike(userId, formResponseId)
+    res.status(201).json({ message: 'Liked successfully', like })
+  } catch (error) {
+    res.status(400).json({ message: error })
+  }
+}
+
+const unlikeFormResponse = async (req: Request, res: Response) => {
+  const { userId, formResponseId } = req.body
+  try {
+    const like = await FormResponseServices.removeLike(userId, formResponseId)
+    res.status(200).json({ message: 'Unliked successfully', like })
+  } catch (error) {
+    res.status(400).json({ message: error })
+  }
+}
+
+const saveFormResponse = async (req: Request, res: Response) => {
+  const { userId, formResponseId } = req.body
+  try {
+    const save = await FormResponseServices.saveFormResponse(
+      userId,
+      formResponseId,
+    )
+    res.status(201).json({ message: 'Saved successfully', save })
+  } catch (error) {
+    res.status(400).json({ message: error })
+  }
+}
+
+const getFormSavedResponsesByUser = async (req: Request, res: Response) => {
+  const { userId } = req.params
+  try {
+    const saves = await FormResponseServices.getFormSavedResponsesByUser(userId)
+    res.status(200).json(saves)
+  } catch (error: any) {
+    if (error.message === 'User not found') {
+      return res.status(404).json({ message: 'User not found' })
+    }
+    res.status(500).json({ message: 'Internal server error' })
+  }
+}
+
+const unsaveFormResponse = async (req: Request, res: Response) => {
+  const { userId, formResponseId } = req.body
+  try {
+    const save = await FormResponseServices.unsaveFormResponse(
+      userId,
+      formResponseId,
+    )
+    res.status(200).json({ message: 'Unsaved successfully', save })
+  } catch (error) {
+    res.status(400).json({ message: error })
+  }
+}
+
 export const formResponseController = {
   createFormResponse,
   getFormsByUser,
   shareFormResponseToCommunityController,
   getFormResponsesCommunity,
-  deleteByResponseId
+  deleteByResponseId,
+  likeFormResponse,
+  unlikeFormResponse,
+  saveFormResponse,
+  unsaveFormResponse,
+  getFormSavedResponsesByUser
 }

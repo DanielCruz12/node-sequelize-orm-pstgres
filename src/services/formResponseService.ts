@@ -1,7 +1,11 @@
+import { col, fn } from 'sequelize'
+import sequelize from '../database/dataBase'
 import { ShareFormResponseParams } from '../interfaces'
 import { Form } from '../models/form'
 import { FormResponse } from '../models/formResponse'
+import { Like } from '../models/Like'
 import { User } from '../models/user'
+import { SavedResponse } from '../models/save'
 
 const save = async (formResponseData: any) => {
   return await FormResponse.create(formResponseData)
@@ -21,6 +25,11 @@ const getAllFormCommunity = async () => {
     include: [
       { model: Form, as: 'form' },
       { model: User, as: 'user' },
+      {
+        model: Like,
+        as: 'likes',
+        attributes: ['id'],
+      },
     ],
     order: [['createdAt', 'DESC']],
   })
@@ -54,14 +63,64 @@ const deleteResponseId = async (id: string) => {
   return null
 }
 
-/* const update = async (id: string, userData: any) => {
-    const user = await User.findByPk(id);
-    if (user) {
-        return await user.update(userData);
-    }
-    return null;
-};
- */
+const addLike = async (userId: string, formResponseId: string) => {
+  const existingLike = await Like.findOne({ where: { userId, formResponseId } })
+  if (existingLike) {
+    throw new Error('User already liked this response')
+  }
+  return await Like.create({ userId, formResponseId })
+}
+
+const removeLike = async (userId: string, formResponseId: string) => {
+  const like = await Like.findOne({ where: { userId, formResponseId } })
+  if (!like) {
+    throw new Error('Like not found')
+  }
+  await like.destroy()
+  return like
+}
+
+const saveFormResponse = async (userId: string, formResponseId: string) => {
+  const existingSave = await SavedResponse.findOne({
+    where: { userId, formResponseId },
+  })
+  if (existingSave) {
+    throw new Error('User already saved this response')
+  }
+  return await SavedResponse.create({ userId, formResponseId })
+}
+
+const getFormSavedResponsesByUser = async (userId: string) => {
+  const userExists = await User.findByPk(userId)
+  if (!userExists) {
+    throw new Error('User not found')
+  }
+
+  return await SavedResponse.findAll({
+    where: { userId },
+    include: [
+      {
+        model: FormResponse,
+        as: 'formResponse',
+        include: [
+          { model: Form, as: 'form' },
+          { model: User, as: 'user' },
+        ],
+      },
+    ],
+  })
+}
+
+const unsaveFormResponse = async (userId: string, formResponseId: string) => {
+  const save = await SavedResponse.findOne({
+    where: { userId, formResponseId },
+  })
+  if (!save) {
+    throw new Error('Saved response not found')
+  }
+  await save.destroy()
+  return save
+}
 
 export const FormResponseServices = {
   save,
@@ -69,8 +128,9 @@ export const FormResponseServices = {
   shareFormResponseToCommunity,
   getAllFormCommunity,
   deleteResponseId,
-  /*  getAll,
-    getById,
-    update,
-    deleteUser */
+  addLike,
+  removeLike,
+  saveFormResponse,
+  unsaveFormResponse,
+  getFormSavedResponsesByUser,
 }
