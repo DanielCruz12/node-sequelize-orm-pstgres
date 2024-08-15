@@ -1,11 +1,9 @@
-import { col, fn } from 'sequelize'
-import sequelize from '../database/dataBase'
 import { ShareFormResponseParams } from '../interfaces'
 import { Form } from '../models/form'
 import { FormResponse } from '../models/formResponse'
-import { Like } from '../models/Like'
 import { User } from '../models/user'
 import { SavedResponse } from '../models/save'
+import { Like } from '../models/like'
 
 const save = async (formResponseData: any) => {
   return await FormResponse.create(formResponseData)
