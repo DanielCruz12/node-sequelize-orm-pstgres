@@ -26,6 +26,7 @@ const getAllFormCommunity = async () => {
       {
         model: Like,
         as: 'likes',
+        attributes: ['id', 'userId'],
       },
     ],
     order: [['createdAt', 'DESC']],
