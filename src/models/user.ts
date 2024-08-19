@@ -1,14 +1,13 @@
 import { DataTypes } from 'sequelize'
-import { v4 as uuidv4 } from 'uuid'
 import sequelize from '../database/dataBase'
 
 export const User = sequelize.define(
   'users',
   {
     id: {
-      allowNull: false,
       primaryKey: true,
       type: DataTypes.STRING,
+      allowNull: false,
     },
 
     email: {
@@ -26,10 +25,15 @@ export const User = sequelize.define(
         },
       },
     },
+    userType: {
+      type: DataTypes.ENUM('admin', 'user'),
+      allowNull: false,
+      defaultValue: 'user',
+    },
     name: {
       type: DataTypes.STRING(255),
       allowNull: false,
-    }
+    },
   },
   {
     paranoid: true,

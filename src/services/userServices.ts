@@ -1,10 +1,12 @@
 import { Form } from "../models/form";
 import { User } from "../models/user";
 
+//? This will create a new user
 const create = async (userData: any) => {
     return await User.create(userData);
 };
 
+//? This will get all users with their forms
 const getAll = async () => {
     return await User.findAll({
         include: [{ model: Form, as: 'forms' }],
@@ -12,10 +14,12 @@ const getAll = async () => {
     });
 };
 
+//? This will get a single user by id
 const getById = async (id: string) => {
     return await User.findByPk(id);
 };
 
+//? This will update a user by id
 const update = async (id: string, userData: any) => {
     const user = await User.findByPk(id);
     if (user) {
@@ -24,6 +28,7 @@ const update = async (id: string, userData: any) => {
     return null;
 };
 
+//? This will delete a user by id
 const deleteUser = async (id: string) => {
     const user = await User.findByPk(id);
     if (user) {

@@ -28,7 +28,6 @@ export const FormResponse: any = sequelize.define(
       allowNull: false,
     },
     form_fields_data: {
-      /* Lo que el usuario digite para generar el texto */
       type: DataTypes.JSONB,
       allowNull: false,
     },

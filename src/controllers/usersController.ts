@@ -1,13 +1,14 @@
 import { Request, Response } from 'express'
 import { userServices } from '../services/userServices'
 
+//? This will create and save into the db an user using the Webhook of Clerk
 const createUser = async (req: Request, res: Response) => {
   const { email, id, name } = req.body
   try {
     const data = await userServices.create({
       email,
       id,
-      name
+      name,
     })
     res.status(201).json({ message: 'User created successfully', data })
   } catch (error) {
@@ -16,6 +17,7 @@ const createUser = async (req: Request, res: Response) => {
   }
 }
 
+//? This will get all the users from the db
 const getUsers = async (req: Request, res: Response) => {
   try {
     const data = await userServices.getAll()
@@ -26,6 +28,7 @@ const getUsers = async (req: Request, res: Response) => {
   }
 }
 
+//? This will get a single user by its id from the db
 const getUser = async (req: Request, res: Response) => {
   const { id } = req.params
   try {
@@ -40,6 +43,7 @@ const getUser = async (req: Request, res: Response) => {
   }
 }
 
+//? This will update a single user by its id in the db  F
 const updateUser = async (req: Request, res: Response) => {
   const { id } = req.params
   const { firstName, lastName, email, userType } = req.body
@@ -60,6 +64,7 @@ const updateUser = async (req: Request, res: Response) => {
   }
 }
 
+//? This will delete a single user by its id from the db
 const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params
   try {

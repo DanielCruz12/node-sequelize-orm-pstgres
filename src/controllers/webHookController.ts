@@ -3,14 +3,14 @@ import { Webhook } from 'svix'
 import { usersController } from './usersController'
 
 export const handleWebHook = async (req: Request, res: Response) => {
-  // Retrieve the webhook secret from environment variables
+  //* Retrieve the webhook secret from environment variables
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET
   if (!WEBHOOK_SECRET) {
     console.error('You need a WEBHOOK_SECRET in your .env')
     return res.status(500).json({ message: 'Internal server error' })
   }
 
-  // Extract the headers and raw payload
+  //* Extract the headers and raw payload
   const headers = req.headers
   const payload = req.body
   const rawBody = payload.toString('utf8')
@@ -21,23 +21,23 @@ export const handleWebHook = async (req: Request, res: Response) => {
     Buffer.isBuffer(rawBody) ? 'Buffer' : typeof rawBody,
   )
 
-  // Extract Svix-specific headers
+  //* Extract Svix-specific headers
   const svix_id = headers['svix-id'] as string
   const svix_timestamp = headers['svix-timestamp'] as string
   const svix_signature = headers['svix-signature'] as string
 
-  // Check for missing Svix headers
+  //* Check for missing Svix headers
   if (!svix_id || !svix_timestamp || !svix_signature) {
     return res.status(400).json({ message: 'Missing Svix headers' })
   }
 
-  // Create a new Svix webhook instance with the secret
+  //* Create a new Svix webhook instance with the secret
   const wh = new Webhook(WEBHOOK_SECRET)
 
   let evt: any = null
 
   try {
-    // Verify the webhook payload and headers
+    //* Verify the webhook payload and headers
     evt = wh.verify(rawBody, {
       'svix-id': svix_id,
       'svix-timestamp': svix_timestamp,

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { FormResponseServices } from '../services/formResponseService'
 
+//? this ep will be to save the user's response and fields in the db
 const createFormResponse = async (req: Request, res: Response) => {
   const { userId, formId, responseData, form_fields_data, share_status } =
     req.body
@@ -73,6 +74,7 @@ const shareFormResponseToCommunityController = async (
   }
 }
 
+//? This will delete the result
 const deleteByResponseId = async (req: Request, res: Response) => {
   const { id } = req.params
   try {
@@ -87,6 +89,7 @@ const deleteByResponseId = async (req: Request, res: Response) => {
   }
 }
 
+//? This will like the result
 const likeFormResponse = async (req: Request, res: Response) => {
   const { userId, formResponseId } = req.body
   try {
@@ -97,6 +100,7 @@ const likeFormResponse = async (req: Request, res: Response) => {
   }
 }
 
+//? This will unlike the result
 const unlikeFormResponse = async (req: Request, res: Response) => {
   const { userId, formResponseId } = req.body
   try {
@@ -107,6 +111,7 @@ const unlikeFormResponse = async (req: Request, res: Response) => {
   }
 }
 
+//? This will save the result
 const saveFormResponse = async (req: Request, res: Response) => {
   const { userId, formResponseId } = req.body
   try {
@@ -120,6 +125,7 @@ const saveFormResponse = async (req: Request, res: Response) => {
   }
 }
 
+//? This will get the saved result
 const getFormSavedResponsesByUser = async (req: Request, res: Response) => {
   const { userId } = req.params
   try {
@@ -133,6 +139,7 @@ const getFormSavedResponsesByUser = async (req: Request, res: Response) => {
   }
 }
 
+//? This will save the result
 const unsaveFormResponse = async (req: Request, res: Response) => {
   const { userId, formResponseId } = req.body
   try {
@@ -156,5 +163,5 @@ export const formResponseController = {
   unlikeFormResponse,
   saveFormResponse,
   unsaveFormResponse,
-  getFormSavedResponsesByUser
+  getFormSavedResponsesByUser,
 }
