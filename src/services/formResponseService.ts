@@ -25,10 +25,19 @@ const getAllFormCommunity = async () => {
     where: { share_status: true },
     include: [
       { model: Form, as: 'form' },
-      { model: User, as: 'user' },
+      {
+        model: User,
+        as: 'user',
+        attributes: ['id', 'email', 'userType', 'name'],
+      },
       {
         model: Like,
         as: 'likes',
+        attributes: ['id', 'userId'],
+      },
+      {
+        model: SavedResponse,
+        as: 'savedResponses',
         attributes: ['id', 'userId'],
       },
     ],

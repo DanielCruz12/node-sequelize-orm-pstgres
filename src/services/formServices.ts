@@ -1,5 +1,6 @@
 import { Form } from '../models/form'
 import { FormField } from '../models/formField'
+import { FormResponse } from '../models/formResponse'
 
 //? This will create a Form
 const create = async (formData: any) => {
@@ -27,6 +28,7 @@ const getAll = async () => {
         'name',
         'description',
         'icon',
+        'isRecommended',
         'category',
         'slug',
         'aiPrompt',
@@ -59,6 +61,7 @@ const formatFormResponse = ({
   id,
   name,
   description,
+  isRecommended,
   icon,
   category,
   slug,
@@ -68,6 +71,7 @@ const formatFormResponse = ({
   icon,
   name,
   description,
+  isRecommended,
   id,
   category,
   slug,
