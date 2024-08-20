@@ -124,6 +124,7 @@ const getFormSavedResponsesByUser = async (userId: string) => {
         ],
       },
     ],
+    order: [['createdAt', 'DESC']],
   })
 }
 
