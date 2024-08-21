@@ -1,7 +1,8 @@
-import { DataTypes } from 'sequelize'
+import { DataTypes, Model, Optional } from 'sequelize'
 import sequelize from '../database/dataBase'
 
-export const User = sequelize.define(
+
+export const User = sequelize.define<any>(
   'users',
   {
     id: {
@@ -33,6 +34,18 @@ export const User = sequelize.define(
     name: {
       type: DataTypes.STRING(255),
       allowNull: false,
+    },
+    totalDonations: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+      defaultValue: 0.0,
+      validate: {
+        isDecimal: true,
+      },
+    },
+    lastDonationAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
     },
   },
   {

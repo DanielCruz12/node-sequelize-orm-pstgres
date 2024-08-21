@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 import bodyParser from 'body-parser'
 import { apiRoutes } from './routes/v1'
 import { handleWebHook } from './controllers/webHookController'
+import { handleLemonSqueezyWebHook } from './controllers/webHookLemonController'
 
 dotenv.config()
 
@@ -19,6 +20,11 @@ app.post(
   handleWebHook,
 )
 
+app.post(
+  '/api/v1/webhook/payment/order',
+  bodyParser.raw({ type: 'application/json' }),  // Use raw body for webhook verification
+  handleLemonSqueezyWebHook,
+);
 app.use(express.json())
 
 //* Define routes
