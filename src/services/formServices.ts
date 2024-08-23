@@ -1,6 +1,7 @@
 import { Form } from '../models/form'
 import { FormField } from '../models/formField'
 import { FormResponse } from '../models/formResponse'
+import { formatFormResponse } from '../utils'
 
 //? This will create a Form
 const create = async (formData: any) => {
@@ -23,12 +24,14 @@ const create = async (formData: any) => {
 const getAll = async () => {
   try {
     const forms = await Form.findAll({
+      where: { isApproved: true },
       attributes: [
         'id',
         'name',
         'description',
         'icon',
         'isRecommended',
+        'isApproved',
         'category',
         'slug',
         'aiPrompt',
@@ -56,44 +59,6 @@ const getAll = async () => {
     throw new Error('Error fetching forms')
   }
 }
-
-const formatFormResponse = ({
-  id,
-  name,
-  description,
-  isRecommended,
-  icon,
-  category,
-  slug,
-  aiPrompt,
-  fields,
-}: any) => ({
-  icon,
-  name,
-  description,
-  isRecommended,
-  id,
-  category,
-  slug,
-  aiPrompt,
-  form: fields.map(formatFieldResponse),
-})
-
-const formatFieldResponse = ({
-  id,
-  label,
-  fieldType,
-  name,
-  required,
-  placeholder,
-}: any) => ({
-  id,
-  label,
-  field: fieldType,
-  name,
-  required,
-  placeholder,
-})
 
 //? this will getById a Form
 const getById = async (id: string) => {

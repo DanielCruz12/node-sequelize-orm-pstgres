@@ -53,7 +53,7 @@ const getFormById = async (req: Request, res: Response) => {
 //? Update a form by ID
 const updateForm = async (req: Request, res: Response) => {
   const { id } = req.params
-  const { userId, name, description, icon, category, slug, aiPrompt, fields } =
+  const { userId, name, description, icon, category, slug, isApproved, aiPrompt, fields } =
     req.body
 
   try {
@@ -62,6 +62,7 @@ const updateForm = async (req: Request, res: Response) => {
       name,
       description,
       icon,
+      isApproved,
       category,
       slug,
       aiPrompt,
@@ -97,5 +98,6 @@ export const formController = {
   createForm,
   getForms,
   updateForm,
+  getFormById,
   deleteForm,
 }

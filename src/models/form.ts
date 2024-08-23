@@ -20,7 +20,12 @@ export const Form = sequelize.define(
     isRecommended: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
-      allowNull: false
+      allowNull: false,
+    },
+    isApproved: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
     },
     name: {
       type: DataTypes.STRING(255),
