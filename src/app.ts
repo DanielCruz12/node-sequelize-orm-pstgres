@@ -22,9 +22,10 @@ app.post(
 
 app.post(
   '/api/v1/webhook/payment/order',
-  bodyParser.raw({ type: 'application/json' }),  // Use raw body for webhook verification
+  bodyParser.raw({ type: 'application/json' }), //* Use raw body for webhook verification
   handleLemonSqueezyWebHook,
-);
+)
+
 app.use(express.json())
 
 //* Define routes
