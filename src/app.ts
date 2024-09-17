@@ -36,4 +36,12 @@ app.use('/api/v1', (req, res) => {
   res.status(404).json({ message: 'Route not found' })
 })
 
+app.use(express.static('public'))
+
+//* Ruta para la página principal
+app.get('/', (req, res) => {
+  res.sendFile(__dirname + '/public/index.html')
+})
+
+
 export default app
