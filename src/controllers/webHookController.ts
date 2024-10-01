@@ -51,18 +51,21 @@ export const handleWebHook = async (req: Request, res: Response) => {
     })
   }
 
-  const { id, email_addresses, first_name, last_name } = evt.data
+  const { id, email_addresses, first_name, last_name, organization } = evt.data
   const eventType = evt.type
 
   try {
     switch (eventType) {
+      // User related events
       case 'user.created':
+      case 'user.createdAtEdge':
+      case 'session.created':
         await usersController.createUser(
           {
             body: {
               email: email_addresses[0].email_address,
-              id: email_addresses[0].id,
-              name: first_name + ' ' + last_name,
+              id,
+              name: `${first_name} ${last_name}`,
             },
           } as Request,
           res,
@@ -87,10 +90,42 @@ export const handleWebHook = async (req: Request, res: Response) => {
         await usersController.deleteUser({ params: { id } } as any, res)
         break
 
+      // Session related events
+      case 'session.ended':
+      case 'session.removed':
+      case 'session.revoked':
+        // Handle session events if needed
+        console.log(`Session event: ${eventType}`)
+        break
+
+      // Other events
+      case 'email.created':
+      case 'permission.created':
+      case 'permission.updated':
+      case 'permission.deleted':
+      case 'role.created':
+      case 'role.updated':
+      case 'role.deleted':
+      case 'organizationInvitation.created':
+      case 'organizationInvitation.revoked':
+      case 'organizationInvitation.accepted':
+      case 'organizationMembership.created':
+      case 'organizationMembership.updated':
+      case 'organizationMembership.deleted':
+      case 'organizationDomain.created':
+      case 'organizationDomain.updated':
+      case 'organizationDomain.deleted':
+        // Log these events for now
+        console.log(`Event received: ${eventType}`)
+        break
+
       default:
         console.log(`Unhandled event type: ${eventType}`)
-        res.status(200).json({ success: true, message: 'Webhook received' })
     }
+
+    res
+      .status(200)
+      .json({ success: true, message: 'Webhook processed successfully' })
   } catch (error) {
     console.error('Error handling webhook event:', error)
     res.status(500).json({ message: 'Error handling webhook event' })

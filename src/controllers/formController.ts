@@ -3,14 +3,26 @@ import { Request, Response } from 'express'
 
 //? Create a new form
 const createForm = async (req: Request, res: Response) => {
-  const { userId, name, description, icon, category, slug, aiPrompt, fields } =
-    req.body
+  const {
+    userId,
+    name,
+    description,
+    icon,
+    category,
+    slug,
+    aiPrompt,
+    isRecommended,
+    isApproved,
+    fields,
+  } = req.body
   try {
     const data = await FormServices.create({
       userId,
       name,
       description,
       icon,
+      isRecommended,
+      isApproved,
       category,
       slug,
       aiPrompt,
@@ -53,8 +65,17 @@ const getFormById = async (req: Request, res: Response) => {
 //? Update a form by ID
 const updateForm = async (req: Request, res: Response) => {
   const { id } = req.params
-  const { userId, name, description, icon, category, slug, isApproved, aiPrompt, fields } =
-    req.body
+  const {
+    userId,
+    name,
+    description,
+    icon,
+    category,
+    slug,
+    isApproved,
+    aiPrompt,
+    fields,
+  } = req.body
 
   try {
     const data = await FormServices.update(id, {
