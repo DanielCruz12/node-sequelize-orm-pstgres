@@ -51,7 +51,7 @@ export const handleWebHook = async (req: Request, res: Response) => {
     })
   }
 
-  const { id, email_addresses, first_name, last_name, organization } = evt.data
+  const { email_addresses, first_name, last_name, id } = evt.data
   const eventType = evt.type
 
   try {
@@ -64,7 +64,7 @@ export const handleWebHook = async (req: Request, res: Response) => {
           {
             body: {
               email: email_addresses[0].email_address,
-              id,
+              id: email_addresses[0].id,
               name: `${first_name} ${last_name}`,
             },
           } as Request,
