@@ -64,7 +64,7 @@ export const handleWebHook = async (req: Request, res: Response) => {
           {
             body: {
               email: email_addresses[0].email_address,
-              id: email_addresses[0].id,
+              id,
               name: `${first_name} ${last_name}`,
             },
           } as Request,
