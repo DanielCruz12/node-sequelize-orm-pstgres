@@ -52,8 +52,11 @@ export const handleWebHook = async (req: Request, res: Response) => {
   }
 
   const { email_addresses, first_name, last_name, id } = evt.data
-  const eventType = evt.type
+  console.log(evt.data)
+  console.log('Received Clerk ID:', id)
 
+  const eventType = evt.type
+  console.log(eventType)
   try {
     switch (eventType) {
       // User related events
