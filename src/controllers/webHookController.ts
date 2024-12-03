@@ -52,17 +52,19 @@ export const handleWebHook = async (req: Request, res: Response) => {
   }
 
   const { email_addresses, first_name, last_name, id } = evt.data
-  console.log(evt.data)
-  console.log('Received Clerk ID:', id)
+  if (!email_addresses || !email_addresses.length || !id) {
+    console.error('Missing required fields in evt.data')
+    return res.status(400).json({ message: 'Invalid webhook payload' })
+  }
+  console.log('Full Event Data:', JSON.stringify(evt, null, 2))
+  console.log('Clerk ID:', id)
+  console.log('Email:', email_addresses[0]?.email_address || 'No email')
 
   const eventType = evt.type
-  console.log(eventType)
   try {
     switch (eventType) {
       // User related events
       case 'user.created':
-      case 'user.createdAtEdge':
-      case 'session.created':
         await usersController.createUser(
           {
             body: {
@@ -97,8 +99,6 @@ export const handleWebHook = async (req: Request, res: Response) => {
       case 'session.ended':
       case 'session.removed':
       case 'session.revoked':
-        // Handle session events if needed
-        console.log(`Session event: ${eventType}`)
         break
 
       // Other events
