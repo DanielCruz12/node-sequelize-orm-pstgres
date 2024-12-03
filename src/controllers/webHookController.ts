@@ -52,10 +52,7 @@ export const handleWebHook = async (req: Request, res: Response) => {
   }
 
   const { email_addresses, first_name, last_name, id } = evt.data
-  if (!email_addresses || !email_addresses.length || !id) {
-    console.error('Missing required fields in evt.data')
-    return res.status(400).json({ message: 'Invalid webhook payload' })
-  }
+
   console.log('Full Event Data:', JSON.stringify(evt, null, 2))
   console.log('Clerk ID:', id)
   console.log('Email:', email_addresses[0]?.email_address || 'No email')
